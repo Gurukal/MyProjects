@@ -9,11 +9,11 @@ GitHub Public URL to Code: https://github.com/Gurukal/MyProjects/tree/main
 
 University of the Poor School Course Registration and Payment System
 
-Purpose
+Purpose:
 
 This program is designed to manage student registrations, course offerings, and student payments in an educational institution. It allows administrators to register students, add courses, enroll students in courses, process payments, and view various details about students and courses.
 
-How to Run the Program
+How to Run the Program:
 
 Ensure you have Python installed on your system.
 
@@ -27,7 +27,7 @@ Run the program using the command: Ellis.Keron-Course_Registration-ITT103-F2024.
 
 Follow the prompts in the menu to interact with the system.
 
-Assumptions
+Assumptions:
 
 Student IDs are unique identifiers for each student.
 
@@ -37,7 +37,7 @@ A minimum payment of 40% of the outstanding balance is required to process a pay
 
 The system assumes valid input formats for names, emails, IDs, and fees.
 
-Limitations
+Limitations:
 
 The program uses a simple list and dictionary to store student and course information, which means the data will be lost when the program terminates.
 
@@ -45,16 +45,16 @@ Added Email Attribute: The Student class now includes an email attribute to stor
 
 Uppercase Course IDs: Course IDs are converted to uppercase to ensure consistency.
 
-Improved Input Validation: Functions input_name and input_id are used to validate name and ID inputs, ensuring names do not contain digits and IDs are numeric.
+Improved Input Validation: Functions input_name and input_id validate name and ID inputs, ensuring names do not contain digits and IDs are numeric.
 
 Payment Percentage: The minimum payment percentage is defined by the Minimum_Percentage variable, set to 40%.
 
-Duplicate Checks: The program checks for duplicate student and course IDs during registration and addition, respectively.
+Duplicate Checks: The program checks for duplicate student and course IDs during registration and addition.
 
 Enhanced Menu: The menu includes options for registering students, adding courses, enrolling in courses, making payments, showing registered students, showing courses, showing students in a course, and checking student balances.
 
 
-Example Menu
+Menu Example:
 
 
 --- Welcome to the University of the Poor School Enrollment System ---
