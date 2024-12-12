@@ -1,19 +1,19 @@
 # This variable holds the minimum percentage of payment balance.
 Minimum_Percentage = 40  
 
-students = [] # Empty List to store sudent details 
+students = [] # Student details empty List to store  
 courses = {} # Empyt Dictionary to store courses 
 
-# Course class to handle course details
+# Course class that handles course details
 class Course:
     def __init__(self, course_id, name, fee):
         self.course_id = course_id
         self.name = name
         self.fee = fee
 
-def input_name(check):
+def input_name(view):
     while True:
-        name = input(check)
+        name = input(view)
         if name.isdigit():
             print("Invalid input. Please enter a valid name (e.g., John).")
         else:
@@ -32,7 +32,7 @@ class Student:
     def __init__(self, student_id, name, email):
         self.student_id = student_id
         self.name = name
-        self.email = email  # Added email attribute
+        self.email = email  
         self.enrolled_courses = []
         self.balance = 0.0
 
@@ -48,18 +48,18 @@ class Student:
         print(f"Payment of {amount} is accepted. Your remaining balance is: {self.balance:.2f}")
         return True
 
-# Function to register a new student
+# This function is used to register a new student
 def register_student():
     print("\n--- Register Student ---")
     student_id = input_id("Enter student ID: ")
 
-    # Check for duplicate student ID
+    # This function is used to check for duplicate student ID
     if any(student.student_id == student_id for student in students):
         print("Student ID already exists. Please use a different ID.")
         return
 
     name = input_name("Enter student name: ")
-    email = input("Enter student email: ")  # Now taking email as input
+    email = input("Enter student email: ")  
     student = Student(student_id, name, email)
     students.append(student)
     print(f"Student {name} has been registered successfully.\n")
@@ -68,9 +68,9 @@ def register_student():
 def add_course():
     print("\n--- Add Course ---")
     course_id = input("Enter course ID: ")
-    course_id = course_id.upper()  # Fix: make course_id uppercase
-
-    # Check for duplicate course ID
+    course_id = course_id.upper() 
+    
+    # This function is used for duplicate course ID
     if course_id in courses:
         print("Course ID already exists. Please use a different ID.")
         return
@@ -94,11 +94,11 @@ def enroll_in_course():
     print("\n--- Enroll a Student in a Course ---")
     student_id = input_id("Enter student ID: ")
     course_id = input("Enter course ID: ")
-    course_id = course_id.upper()  # Make course_id uppercase
+    course_id = course_id.upper()  
 
     # Find the student
-    find_student = (s for s in students if s.student_id == student_id) # A generator to find the student
-    student = next(find_student, None) # Get the next student from the generator, or None if not found
+    find_student = (s for s in students if s.student_id == student_id) # find student
+    student = next(find_student, None) # Gets next student, or None if not found
     if not student:
         print("Student not found.")
         return
@@ -169,7 +169,7 @@ def show_students_in_course():
     find_student = (s for s in students if s.student_id == student_id) 
     student = next(find_student, None) 
     if not student: 
-        print("Student not found.") # Check if the student was found
+        print("Student not found.") 
         return
     
     # Display student details
@@ -190,7 +190,7 @@ def check_student_balance():
     else:
         print("Student not found.")
 
-# Main menu function
+#This is the main menu function
 def main_menu():
     while True:
         print("\n--- Welcome to the University of the Poor School Enrollment System ---")
