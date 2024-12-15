@@ -1,19 +1,16 @@
 # This variable holds the minimum percentage of payment balance.
 Minimum_Percentage = 40  
 
-students = [] # Student details empty List to store  
-courses = {} # Empyt Dictionary to store courses 
-
-# Course class that handles course details
+# Course class to handle course details
 class Course:
     def __init__(self, course_id, name, fee):
         self.course_id = course_id
         self.name = name
         self.fee = fee
 
-def input_name(view):
+def input_name(check):
     while True:
-        name = input(view)
+        name = input(check)
         if name.isdigit():
             print("Invalid input. Please enter a valid name (e.g., John).")
         else:
@@ -27,13 +24,16 @@ def input_id(check):
         else:
             return student_id
 
+courses = {} # Empyt Dictionary to store courses
+students = [] # Empty List to store student details
+
 # Student class to handle student details and enrollment
 class Student:
     def __init__(self, student_id, name, email):
         self.student_id = student_id
-        self.name = name
-        self.email = email  
         self.enrolled_courses = []
+        self.name = name
+        self.email = email
         self.balance = 0.0
 
     def enroll(self, course):
@@ -48,18 +48,19 @@ class Student:
         print(f"Payment of {amount} is accepted. Your remaining balance is: {self.balance:.2f}")
         return True
 
-# This function is used to register a new student
+# Function to register a new student
 def register_student():
     print("\n--- Register Student ---")
     student_id = input_id("Enter student ID: ")
 
-    # This function is used to check for duplicate student ID
-    if any(student.student_id == student_id for student in students):
-        print("Student ID already exists. Please use a different ID.")
-        return
+    # Check for duplicate student ID
+    for student in students:
+        if student.student_id == student_id:
+            print("Student ID already exists. Please use a different ID.")
+            return
 
     name = input_name("Enter student name: ")
-    email = input("Enter student email: ")  
+    email = input("Enter student email: ")
     student = Student(student_id, name, email)
     students.append(student)
     print(f"Student {name} has been registered successfully.\n")
@@ -68,9 +69,9 @@ def register_student():
 def add_course():
     print("\n--- Add Course ---")
     course_id = input("Enter course ID: ")
-    course_id = course_id.upper() 
-    
-    # This function is used for duplicate course ID
+    course_id = course_id.upper()
+
+    # Checks for duplicate course ID
     if course_id in courses:
         print("Course ID already exists. Please use a different ID.")
         return
@@ -89,28 +90,26 @@ def add_course():
     courses[course_id] = course
     print(f"Course {name} added successfully.\n")
 
-# This function to enroll a student in a course
-def enroll_in_course():
+
+def enroll_in_course(): # This function is used to enroll a student in a course
     print("\n--- Enroll a Student in a Course ---")
     student_id = input_id("Enter student ID: ")
     course_id = input("Enter course ID: ")
-    course_id = course_id.upper()  
+    course_id = course_id.upper()
 
-    # Find the student
-    find_student = (s for s in students if s.student_id == student_id) # find student
-    student = next(find_student, None) # Gets next student, or None if not found
+
+    find_student = (i for i in students if i.student_id == student_id) # Code to find the student
+    student = next(find_student, None)
     if not student:
         print("Student not found.")
         return
 
-    # Find the course
-    course = courses.get(course_id)
+    course = courses.get(course_id)  # Find the course
     if not course:
         print("Course not found.")
         return
 
-    # Enroll the student in the course
-    student.enroll(course)
+    student.enroll(course)  # Enroll the student in the course
     print(f"Student {student.name} has been enrolled in {course.name}. Balance: {student.balance:.2f}\n")
 
 # Function to make a payment
@@ -119,7 +118,7 @@ def make_payment():
     student_id = input_id("Enter student ID: ")
 
     # Find the student
-    find_student = (s for s in students if s.student_id == student_id) 
+    find_student = (j for j in students if j.student_id == student_id)
     student = next(find_student, None) 
     if not student:
         print("Student not found.")
@@ -140,7 +139,7 @@ def make_payment():
     if student.make_payment(payment):
         print(f"Payment of {payment:.2f} processed for {student.name}. Remaining balance: {student.balance:.2f}\n")
 
-# Function to view all students
+# this function is used to view all students
 def show_registered_students():
     print("\n--- Show Registered Students ---")
     if not students:
@@ -150,7 +149,7 @@ def show_registered_students():
             print(f"ID: {student.student_id}, Name: {student.name}, Balance: {student.balance:.2f}, Email: {student.email}")
     print()
 
-# Function to view all courses
+# To view all courses i used this function
 def show_courses():
     print("\n--- Show Courses ---")
     if not courses:
@@ -160,37 +159,34 @@ def show_courses():
             print(f"Course ID: {course.course_id}, Name: {course.name}, Fee: {course.fee:.2f}")
     print()
 
-# Function to view details of a student's enrollment
+# Function to show all registered students
 def show_students_in_course():
-    print("\n--- View Student Details ---")
-    student_id = input_id("Enter student ID: ")
-
-    # Find the student
-    find_student = (s for s in students if s.student_id == student_id) 
-    student = next(find_student, None) 
-    if not student: 
-        print("Student not found.") 
-        return
-    
-    # Display student details
-    print(f"ID: {student.student_id}, Name: {student.name}, Balance: {student.balance:.2f}, Email: {student.email}")
-    print("Enrolled courses:")
-    for course in student.enrolled_courses:
-        print(f"Course ID: {course.course_id}, Name: {course.name}, Fee: {course.fee:.2f}")
-    print()
+    print("\n--- Show All Registered Students ---")
+    if not students:
+        print("No students registered.")
+    else:
+        for student in students:
+            print(f"ID: {student.student_id}, Name: {student.name}, Balance: {student.balance:.2f}, Email: {student.email}")
+            if student.enrolled_courses:
+                print("Enrolled Courses:")
+                for course in student.enrolled_courses:
+                    print(f"  Course ID: {course.course_id}, Name: {course.name}, Fee: {course.fee:.2f}")
+            else:
+                print("No courses enrolled.")
+            print()
 
 # Function to check the student's balance
 def check_student_balance():
     student_id = input_id("Enter student ID: ")
     # Find the student
-    find_student = (s for s in students if s.student_id == student_id) 
+    find_student = (l for l in students if l.student_id == student_id)
     student = next(find_student, None) 
     if student:
         print(f"Balance for student {student.name}: {student.balance:.2f}")
     else:
         print("Student not found.")
 
-#This is the main menu function
+# Main menu function
 def main_menu():
     while True:
         print("\n--- Welcome to the University of the Poor School Enrollment System ---")
@@ -232,3 +228,5 @@ def main_menu():
 # Run the system
 if __name__ == "__main__":
     main_menu()
+
+# “I CERTIFY THAT I HAVE NOT GIVEN OR RECEIVED ANY UNAUTHORIZED ASSISTANCE ON THIS ASSIGNMENT”.
